@@ -7,7 +7,7 @@ import Effect from "./Effect.js";
 import {magnitude} from "../engine/vector2.js";
 // import ResourceLoader from "../engine/resourceLoader.js";
 
-import GameResources from "../game/GameResources.js";
+import GameResources from "../game/gameResources.js";
 
 export class BoidGame extends Game {
   constructor(canvas) {

@@ -35,11 +35,11 @@ class AudioResource {
   }
 
   addAudioInstance = () => {
-    const audio = new Audio(this.uri);
-    audio.onload = () => {
+    const audio = new Audio();
+    audio.oncanplaythrough = () => {
       if (this.status !== "LOADED") {
         this.status = "LOADED";
-        // TODO update completion (callback)
+        this.loader.updateProgress();
       }
     }
     audio.onended = () => {
@@ -47,10 +47,11 @@ class AudioResource {
         if (instance.audio === audio) {
           console.log('found');
           instance.playing = false;
-          // TODO instead of playing : status = PLAYING | ENDED | PAUSED
+          // TODO instead of playing : status = PLAYING | ENDED | PAUSED ?
         }
-      } 
+      }
     };
+    audio.src = this.uri;
     const track = this.loader.audioContext.createMediaElementSource(audio);
     track.connect(this.loader.audioContext.destination);
 
@@ -77,14 +78,15 @@ class AudioResource {
 }
 
 class ImageResource {
-  constructor(uri) {
+  constructor(uri, loader) {
     this.uri = uri;
+    this.loader = loader;
     this.status = "LOADING",
     this.image = new Image();
     this.image.addEventListener('load', () => {
       console.log("IMAGE LOADED", this.uri);
       this.status = "LOADED";
-      // TODO update completion (callback)
+      this.loader.updateProgress();
     }, false);
     this.image.src = this.uri
   }
@@ -93,22 +95,45 @@ class ImageResource {
 class ResourceLoader {
   constructor() {
     this.resources = {};
+
     // for legacy browsers
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     this.audioContext = new AudioContextClass();
+
+    this.progress = 0;
+    console.log(this);
+    console.log(Object.getPrototypeOf(this));
+    
+    //this.loadResources();
+    // this.updateProgress();
+    console.log("R", this.resources);
+  }
+
+  updateProgress = () => {
+    const resourceList = Object.values(this.resources)
+    const readyResources = resourceList.filter(
+      (resource) => resource.status == "LOADED"
+    );
+    this.progress = readyResources.length / resourceList.length;
+    console.log("PROGRESS UPDATE", this.progress, '(', readyResources.length, '/', resourceList.length, ')');
   }
 
   loadImage = (uri) => {
-    // TODO update completion
-    this.resources[uri] = new ImageResource(uri);
+    this.resources[uri] = new ImageResource(uri, this);
+    this.updateProgress()
     return this.resources[uri];
   };
 
   loadAudio = (uri) => {
-    // TODO update completion
     this.resources[uri] = new AudioResource(uri, this);
+    this.updateProgress()
     return this.resources[uri];
   }
+
+  // TODO override (call loadImage / loadAudio)
+  /*loadResources = () => {
+    console.log("bbbbb");
+  }*/
 
 
   unloadAsset = (uri) => {

@@ -1,10 +1,20 @@
-// TODO class ?
-// TODO add unique hash in key (avoid collisions between games)
+class Storage {
+    constructor(gameId) {
+        this.gameId = gameId;
+    }
 
-const getValue = (key) => {
-    return JSON.parse(window.localStorage.getItem(key));
+    getValue = (key) => {
+        return JSON.parse(
+            window.localStorage.getItem(`${game_id}_${key}`)
+        );
+    }
+    
+    setValue = (key, value) => {
+        return window.localStorage.setItem(
+            `${game_id}_${key}`,
+            JSON.stringify(value)
+        );
+    }
 }
 
-const setValue = (key, value) => {
-    return window.localStorage.setItem(key, JSON.stringify(value));
-}
+export default Storage;

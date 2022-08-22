@@ -1,8 +1,6 @@
 import ResourceLoader from "../engine/resourceLoader.js";
 
 class GameResources extends ResourceLoader {
-    // TODO in helper func called by parent to add pre + post computations (loading time, ...)
-
     image1 = this.loadImage("res/image1.png");
     image2 = this.loadImage("res/image2.png");
     image3 = this.loadImage("res/image3.png");
