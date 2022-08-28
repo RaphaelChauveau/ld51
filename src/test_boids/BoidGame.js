@@ -12,8 +12,8 @@ import GameResources from "../game/gameResources.js";
 export class BoidGame extends Game {
   constructor(canvas) {
     super(canvas);
-    this.updatePerSecond = 60;
-    this.drawPerSecond = 60;
+    this.updatePerSecond = 30;
+    this.drawPerSecond = 30;
 
     this.resources = new GameResources();
 
@@ -85,7 +85,7 @@ export class BoidGame extends Game {
   update = (delta) => {
     if (delta > 20) {
       // TODO if delta too high (> (2?) * classic delta) => pause
-      console.log(delta);
+      // console.log(delta);
     }
     this.player.update(delta, this.inputHandler);
     for (const boid of this.boids) {
