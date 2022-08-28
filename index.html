@@ -10,7 +10,6 @@
                 margin: 0;
             }
 
-
             #display {
                 /* border: 1px solid; */
                 transform-origin: top left;
@@ -22,13 +21,12 @@
             #debug {
                 /*visibility: hidden;*/
                 pointer-events: none;
-                position: fixed;
+                position: absolute;
                 top: 0;
                 left: 0;
                 border: 1px solid;
                 color: #FFF;
             }
-
 
             /*
             B__E--M
@@ -75,6 +73,7 @@
                 left: 0;
                 bottom: 0;
                 right: 0;
+                margin: auto;
             }
 
         </style>
@@ -87,41 +86,34 @@
         </script>
 
         <div class="ui">
-            <div class="ui__menu">
+            <div id="menu" class="ui__menu">
                 Menu
+                <button id="play-pause">PAUSE</button>
             </div>
             <div class="ui__content">
                 <div id="game-wrapper" class="ui__game">
                     <canvas id="display" class="responsive-canvas" width="800" height="600">
                         Monkeee
                     </canvas>
+                    <div id="debug">
+                        -----debug-----
+                        <br>
+                        <span id="mouse-x"></span>
+                        <br>
+                        <span id="mouse-y"></span>
+                        <script>
+                            document.getElementById('display').onmousemove = (e) => {
+                                const canvas = document.getElementById('display');
+                                document.getElementById('mouse-x').innerText = (e.offsetX / canvas.offsetWidth * GAME_WIDTH).toString();
+                                document.getElementById('mouse-y').innerText = (e.offsetY / canvas.offsetHeight * GAME_HEIGHT).toString();
+                            }
+                        </script>
+                    </div>
                 </div>
-                <div class="ui__sidebar">
+                <div id="sidebar" class="ui__sidebar">
                     Interface
                 </div>
             </div>
-        </div>
-
-        <div id="debug">
-            -----debug-----
-            <br>
-            <script>
-                const toggleInterface = () => {
-                    console.log("TOGGLE INTERFACE");
-                }
-            </script>
-            <button onclick="toggleInterface()">Tooggle interface</button>
-            <br>
-            <span id="mouse-x"></span>
-            <br>
-            <span id="mouse-y"></span>
-            <script>
-                document.getElementById('display').onmousemove = (e) => {
-                    const canvas = document.getElementById('display');
-                    document.getElementById('mouse-x').innerText = (e.offsetX / canvas.offsetWidth * GAME_WIDTH).toString();
-                    document.getElementById('mouse-y').innerText = (e.offsetY / canvas.offsetHeight * GAME_HEIGHT).toString();
-                }
-            </script>
         </div>
 
         <script type="module" src="src/index.js"></script>

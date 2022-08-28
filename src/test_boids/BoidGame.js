@@ -5,15 +5,14 @@ import Player from "./Player.js";
 import RangeBoid from "./RangeBoid.js";
 import Effect from "./Effect.js";
 import {magnitude} from "../engine/vector2.js";
-// import ResourceLoader from "../engine/resourceLoader.js";
 
-import GameResources from "../game/gameResources.js";
+import GameResources from "../test_game/gameResources.js";
 
 export class BoidGame extends Game {
   constructor(canvas) {
     super(canvas);
-    this.updatePerSecond = 30;
-    this.drawPerSecond = 30;
+    this.updatePerSecond = 60;
+    this.drawPerSecond = 60;
 
     this.resources = new GameResources();
 
