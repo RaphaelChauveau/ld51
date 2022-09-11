@@ -2,6 +2,7 @@ class Scene {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
+    this.bgColor = '#AAAAAA';
 
     // camera
     this._position = {x: 0, y: 0}; // TODO array
@@ -9,7 +10,7 @@ class Scene {
   }
 
   drawBegin = () => {
-    this.ctx.fillStyle = '#AAAAAA';
+    this.ctx.fillStyle = this.bgColor;
     // this.ctx.fillStyle = '#151d28';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 

@@ -25,6 +25,7 @@ class Game {
     this._updateInterval = null;
     this._drawInterval = null;
     this._lastUpdateTime = null;
+    this._isPaused = false;
   }
 
   run = () => {
@@ -66,7 +67,9 @@ class Game {
     const delta = now - this._lastUpdateTime;
     this._lastUpdateTime = now;
 
-    this.update(delta);
+    if (!this._isPaused) {
+      this.update(delta);
+    }
     this.inputHandler.newFrame();
   };
 
@@ -74,9 +77,11 @@ class Game {
   update = (delta) => {};
 
   _basicDraw = () => {
-    this._scene.drawBegin();
-    this.draw(this._scene);
-    this._scene.drawEnd();
+    if (!this._isPaused) {
+      this._scene.drawBegin();
+      this.draw(this._scene);
+      this._scene.drawEnd();
+    }
   };
 
   // TODO override

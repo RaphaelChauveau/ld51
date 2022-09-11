@@ -1,31 +1,59 @@
 import Game from "../engine/game.js";
 import GameResources from "./gameResources.js";
+import LoadingScreen from "./LoadingScreen.js";
 import MenuInterface from "./MenuInterface.js";
+import TestLevel from "./TestLevel.js";
+
+const GAME_STATES = {
+    LOADING: "LOADING",
+    GAME: "GAME", // badly named
+}
 
 class TestGame extends Game {
     constructor(canvas) {
         super(canvas);
 
-        this.updatePerSecond = 10;
-        this.drawPerSecond = 10;
+        this.updatePerSecond = 30;
+        this.drawPerSecond = 30;
 
         this.menu = new MenuInterface('menu', this);
+        // this.tools = TODO
 
         this.resources = new GameResources();
+        this.state = GAME_STATES.LOADING;
 
-        this.isPaused = false;
+        this.loadingScreen = new LoadingScreen(this);
+        this.level = null;
+    }
+
+    loadingFinished = () => {
+        this.level = new TestLevel(this);
+        this.state = GAME_STATES.GAME;
     }
 
     update = (delta) => {
-        if (this.isPaused) {
-            return;
+        switch (this.state) {
+            case GAME_STATES.LOADING: {
+                this.loadingScreen.update(delta);
+                break;
+            }
+            case GAME_STATES.GAME: {
+                this.level.update(delta);
+                break;
+            }
         }
-        console.log('update');
     };
 
     draw = (scene) => {
-        if (this.isPaused) {
-            return;
+        switch (this.state) {
+            case GAME_STATES.LOADING: {
+                this.loadingScreen.draw(scene);
+                break;
+            }
+            case GAME_STATES.GAME: {
+                this.level.draw(scene);
+                break;
+            }
         }
     };
 }

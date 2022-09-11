@@ -1,6 +1,7 @@
 
 class MenuInterface {
     constructor(elementId, game) {
+        // TODO super()
         this.element = document.getElementById(elementId);
         this.game = game;
 
@@ -22,11 +23,11 @@ class MenuInterface {
     // user_defined
     handleClickPlayPause = (e) => {
         console.log(this.game, e);
-        if (this.game.isPaused) {
-            this.game.isPaused = false;
+        if (this.game._isPaused) {
+            this.game._isPaused = false;
             this.playPauseButton.textContent = "PAUSE";
         } else {
-            this.game.isPaused = true;
+            this.game._isPaused = true;
             this.playPauseButton.textContent = "PLAY";
         }
     }
