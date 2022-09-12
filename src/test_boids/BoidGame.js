@@ -1,4 +1,3 @@
-import Game from '../engine/game.js';
 import { Boid } from "./Boid.js";
 import Obstacle from "./Obstacle.js";
 import Player from "./Player.js";
@@ -6,15 +5,10 @@ import RangeBoid from "./RangeBoid.js";
 import Effect from "./Effect.js";
 import {magnitude} from "../engine/vector2.js";
 
-import GameResources from "../test_game/gameResources.js";
-
-export class BoidGame extends Game {
-  constructor(canvas) {
-    super(canvas);
-    this.updatePerSecond = 60;
-    this.drawPerSecond = 60;
-
-    this.resources = new GameResources();
+export class BoidGame {
+  constructor(game) {
+    this.game = game;
+    this.game._scene.bgColor = "#FFFFFF";
 
     this.colliders = [];
     this.boids = [];
@@ -57,12 +51,6 @@ export class BoidGame extends Game {
     this.createBoid(120, 460);
   }
 
-  loadAssets = () => {
-    //this.resourceLoader = new ResourceLoader();
-    //this.logoImage = this.resourceLoader.loadImage("../res/tree_1.png");
-    //console.log(this.logoImage);
-  };
-
   createBoid = (x, y, r, w) => {
     const boid = new Boid(x, y, r, w);
     this.boids.push(boid);
@@ -86,9 +74,9 @@ export class BoidGame extends Game {
       // TODO if delta too high (> (2?) * classic delta) => pause
       // console.log(delta);
     }
-    this.player.update(delta, this.inputHandler);
+    this.player.update(delta, this.game.inputHandler);
     for (const boid of this.boids) {
-      boid.update(delta, this.player, this.resources);
+      boid.update(delta, this.player, this.game.resources);
     }
     this.player.expand(this.colliders);
     for (const boid of this.boids) {
@@ -96,23 +84,21 @@ export class BoidGame extends Game {
     }
 
     // test // TODO in player ?
-    if (this.inputHandler.getKeyDown('Space')) {
-      this.resources.sound2.play();
+    if (this.game.inputHandler.getKeyDown('Space')) {
+      this.game.resources.sound2.play();
       for (const boid of this.boids) {
         const fromPlayerX = boid.positionX - this.player.positionX;
         const fromPlayerY = boid.positionY - this.player.positionY;
         const ratio = 100 / magnitude([fromPlayerX, fromPlayerY]);
         // TODO affected by entity weight ?
-        boid.addEffect(new Effect(500, [fromPlayerX * ratio, fromPlayerY * ratio])); // TODO away from player
+        boid.addEffect(new Effect(500, [fromPlayerX * ratio, fromPlayerY * ratio])); // away from player
       }
     }
   };
 
   draw = (scene) => {
-    //console.log('draw game');
-    //scene.setCenterPosition(400, 300);
     for (const boid of this.boids) {
-      boid.draw(scene, this.resources);
+      boid.draw(scene, this.game.resources);
     }
     for (const obstacle of this.obstacles) {
       obstacle.draw(scene);

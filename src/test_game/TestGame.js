@@ -1,4 +1,5 @@
 import Game from "../engine/game.js";
+import { BoidGame } from "../test_boids/BoidGame.js";
 import GameResources from "./gameResources.js";
 import LoadingScreen from "./LoadingScreen.js";
 import MenuInterface from "./MenuInterface.js";
@@ -13,8 +14,8 @@ class TestGame extends Game {
     constructor(canvas) {
         super(canvas);
 
-        this.updatePerSecond = 30;
-        this.drawPerSecond = 30;
+        this.updatePerSecond = 60;
+        this.drawPerSecond = 60;
 
         this.menu = new MenuInterface('menu', this);
         // this.tools = TODO
@@ -27,7 +28,7 @@ class TestGame extends Game {
     }
 
     loadingFinished = () => {
-        this.level = new TestLevel(this);
+        this.level = new BoidGame(this);
         this.state = GAME_STATES.GAME;
     }
 

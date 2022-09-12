@@ -124,9 +124,6 @@ export class Boid {
   }
 
   draw(scene, resources) {
-
-    // scene.drawImage(image, this.positionX - this.radius, this.positionY - this.radius, this.radius * 2, this.radius * 2);
-
     scene.ctx.beginPath();
     scene.ctx.arc(this.positionX, this.positionY, this.radius, 0, 2 * Math.PI);
     scene.ctx.moveTo(this.positionX + this.dirX * this.radius * 2,
@@ -139,6 +136,5 @@ export class Boid {
     }
     scene.ctx.strokeStyle = this.color;
     scene.ctx.stroke();
-    scene.drawImage(resources.image1, this.positionX, this.positionY, 16, 16);
   }
 }
