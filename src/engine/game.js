@@ -29,10 +29,10 @@ class Game {
   }
 
   run = () => {
-    this.inputHandler = new Input(this);
     this.loadAssets();
 
     this._lastUpdateTime = new Date();
+    this._lastDrawTime = new Date();
     const updateDelay = MILLISECOND_PER_SECOND / this.updatePerSecond;
     const drawDelay = MILLISECOND_PER_SECOND / this.drawPerSecond;
     this._updateInterval = window.setInterval(this._basicUpdate, updateDelay);
@@ -77,9 +77,13 @@ class Game {
   update = (delta) => {};
 
   _basicDraw = () => {
+    const now = new Date();
+    const delta = now - this._lastDrawTime;
+    this._lastDrawTime = now;
+
     if (!this._isPaused) {
       this._scene.drawBegin();
-      this.draw(this._scene);
+      this.draw(this._scene, delta);
       this._scene.drawEnd();
     }
   };

@@ -4,11 +4,16 @@ import Player from "./Player.js";
 import RangeBoid from "./RangeBoid.js";
 import Effect from "./Effect.js";
 import {magnitude} from "../engine/vector2.js";
+import Input from "../engine/input.js";
+import Map from "../test_game/map/Map.js";
 
 export class BoidGame {
   constructor(game) {
     this.game = game;
     this.game._scene.bgColor = "#FFFFFF";
+
+    this.game.inputHandler.defineAction("PUSH", ['Space', 'KeyE']);
+    // this.game.inputHandler.defineAxis("MOVE", "KeyA", "KeyD");
 
     this.colliders = [];
     this.boids = [];
@@ -49,6 +54,9 @@ export class BoidGame {
     this.createBoid(120, 440);
     this.createBoid(100, 460);
     this.createBoid(120, 460);
+
+    // map tests
+    this.map = new Map(this.game, 10, 10, 8, 6);
   }
 
   createBoid = (x, y, r, w) => {
@@ -84,7 +92,8 @@ export class BoidGame {
     }
 
     // test // TODO in player ?
-    if (this.game.inputHandler.getKeyDown('Space')) {
+    // console.log(this.game.inputHandler.getAxisValue("MOVE"));
+    if (this.game.inputHandler.getKeyDown(Input.getAction('PUSH'))) {
       this.game.resources.sound2.play();
       for (const boid of this.boids) {
         const fromPlayerX = boid.positionX - this.player.positionX;
@@ -94,9 +103,12 @@ export class BoidGame {
         boid.addEffect(new Effect(500, [fromPlayerX * ratio, fromPlayerY * ratio])); // away from player
       }
     }
+
+    this.map.update();
   };
 
   draw = (scene) => {
+    this.map.draw(scene);
     for (const boid of this.boids) {
       boid.draw(scene, this.game.resources);
     }

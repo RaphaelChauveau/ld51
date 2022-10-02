@@ -5,13 +5,13 @@ class Storage {
 
     getValue = (key) => {
         return JSON.parse(
-            window.localStorage.getItem(`${game_id}_${key}`)
+            window.localStorage.getItem(`${this.gameId}_${key}`)
         );
     }
     
     setValue = (key, value) => {
         return window.localStorage.setItem(
-            `${game_id}_${key}`,
+            `${this.gameId}_${key}`,
             JSON.stringify(value)
         );
     }

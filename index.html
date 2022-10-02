@@ -19,7 +19,7 @@
             }
 
             #debug {
-                /*visibility: hidden;*/
+                visibility: hidden;
                 pointer-events: none;
                 position: absolute;
                 top: 0;
@@ -63,7 +63,7 @@
             .ui__sidebar {
                 flex-grow: 0;
                 flex-shrink: 0;
-                width: 100px;
+                width: 150px;
                 background-color: aqua;
             }
 
@@ -76,6 +76,12 @@
                 margin: auto;
             }
 
+            .interface-not-visible {
+                visibility: hidden;
+                width: 0;
+                height: 0;
+            }
+
         </style>
     </head>
 
@@ -86,10 +92,11 @@
         </script>
 
         <div class="ui">
-            <div id="menu" class="ui__menu">
+            <!--div id="menu" class="ui__menu interface-not-visible">
                 Menu
                 <button id="play-pause">PAUSE</button>
-            </div>
+                <button id="toggle-sidebar">Toggle Sidebar</button>
+            </div-->
             <div class="ui__content">
                 <div id="game-wrapper" class="ui__game">
                     <canvas id="display" class="responsive-canvas" width="800" height="600">
@@ -110,9 +117,16 @@
                         </script>
                     </div>
                 </div>
-                <div id="sidebar" class="ui__sidebar">
+                <!--div id="sidebar" class="ui__sidebar interface-not-visible">
+
                     Interface
-                </div>
+                    <br>
+                    Brush size :
+                    <input id="brush-size-input" type="number" value="1"/>
+                    <hr>
+                    Stuff
+                    <br>
+                </div-->
             </div>
         </div>
 

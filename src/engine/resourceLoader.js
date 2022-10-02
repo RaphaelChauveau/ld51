@@ -45,7 +45,6 @@ class AudioResource {
     audio.onended = () => {
       for (const instance of this.instances) {
         if (instance.audio === audio) {
-          console.log('found');
           instance.playing = false;
           // TODO instead of playing : status = PLAYING | ENDED | PAUSED ?
         }
