@@ -1,14 +1,14 @@
 "use strict";
 
 import LD51Game from "./ld51/LD51Game.js";
-// import TestGame from "./test_game/TestGame.js";
+import TestGame from "./test_game/TestGame.js";
 
 console.log("APP");
 const canvas = document.getElementById("display");
 console.log("CANVAS", canvas);
-const game = new LD51Game(canvas);
+//const game = new LD51Game(canvas);
+const game = new TestGame(canvas);
 window.game = game;
-//const game = new TestGame(canvas);
 console.log("GAME", game);
 game.run();
 

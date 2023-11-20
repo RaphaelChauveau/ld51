@@ -40,6 +40,7 @@ class Input {
   };
 
   _handleKeyDown = (e) => {
+    e.preventDefault();
     const keyCode = e.code;
     console.log(keyCode);
     const wasKeyPressed = this._keyStates[keyCode] || false;

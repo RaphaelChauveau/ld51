@@ -18,8 +18,8 @@ class TestGame extends Game {
         this.updatePerSecond = 60;
         this.drawPerSecond = 60;
 
-        this.menu = new MenuInterface(this, 'menu');
-        this.sidebarInterface = new SidebarInterface(this, 'sidebar', {visible: true});
+        //this.menu = new MenuInterface(this, 'menu');
+        //this.sidebarInterface = new SidebarInterface(this, 'sidebar', {visible: true});
         // this.tools = TODO
 
         this.resources = new GameResources();
